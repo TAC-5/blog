@@ -29,7 +29,17 @@ $(function () {
         url: '/api/login',
         data: formdata,
         success: function (result) {
-          console.log(result);
+          if (result.code == 200) {
+            location.href = "/user"
+          }
+        },
+        error: function (err) {
+          console.log(err);
+          // console.log(err.responseJSON);
+          if (JSON.parse(err.responseText).code == 400) {
+            alert(JSON.parse(err.responseText).msg)
+            $(form).find('input').val('');
+          }
         }
       })
     }
